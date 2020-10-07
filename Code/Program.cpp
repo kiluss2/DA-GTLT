@@ -92,8 +92,17 @@ int main()
 			}
 	}
 		cout << "\nMa tran sau khi qua bien doi Gauss-Jordan:\n";
-		for(int i=0;i<n;i++){ 
+		for(int i = 0; i < n ; i++){ 
 				for(int j=0;j<2*n;j++){
+					printf("%6.2f",arrGhep[i][j]);
+				}
+				cout << "\n";	
+			}
+		
+		system("pause");
+		cout << "\nMa tran nghich dao:\n";
+		for(int i = 0 ; i < n ; i++){ 
+				for(int j = n ; j < 2*n;j++){
 					printf("%6.2f",arrGhep[i][j]);
 				}
 				cout << "\n";	
