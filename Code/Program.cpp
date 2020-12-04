@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include<iomanip>
+#include<tgmath.h>
 using namespace std;
 
 
@@ -59,55 +60,83 @@ int main()
 			
 		// Gauss-Jordan
 		for (int i = 0; i < n; i++) {
-			for (int j = i; j < n; j++) { // duyet tim hang khac hang i co so o cot i khac 0
-				if (arrGhep[j][i] != 0 && j != i && i != n - 1) {
-					double mul = (arrGhep[i][i] - 1) / arrGhep[j][i];; //he so nhan vao hang j,k de tru di ra duoc arr[i][i]=1
-
-					for (int k = 0; k < 2 * n; k++) {
-						arrGhep[i][k] -= mul * arrGhep[j][k];
-					}
-					for (int k = 0; k < n; k++) { // bien doi cac so con lai o cot i thanh 0
-						if (k != i) {
-							double temp = arrGhep[k][i];
-							for (int t = 0; t < 2 * n; t++) {
-								arrGhep[k][t] -= temp * arrGhep[i][t];
-							}
-						}
-					}
-					break;
+			if (arrGhep[i][i] == 0) { // kiem tra = 0
+				if (i == (n - 1)) {
+					cout << "Ma tran suy bien!" << endl;
+					return 0;
 				}
-				if (i == n - 1) { // bien doi hang cuoi cot cuoi ma tran dau vao
-					double mul = 1 / arrGhep[n - 1][n - 1];
-					for (int k = 0; k < 2 * n; k++) arrGhep[n - 1][k] *= mul;
-					for (int k = 0; k < n; k++) { // bien doi cac so con lai o cot n-1 thanh 0
-						if (k != i) {
-							double temp = arrGhep[k][i];
-							for (int t = 0; t < 2 * n; t++) {
-								arrGhep[k][t] -= temp * arrGhep[i][t];
-							}
+				for (int j = i + 1; j < n; j++) { // duyet tim hang duoi hang i co so o cot i khac 0
+					if (arrGhep[j][i] != 0) {
+						for (int k = 0; k < 2 * n; k++) { // hoan doi 2 hang cho nhau
+							arrGhep[i][k] += arrGhep[j][k];
+							arrGhep[j][k] = arrGhep[i][k] - arrGhep[j][k];
+							arrGhep[i][k] -= arrGhep[j][k];
 						}
+						break;
+					}
+					if (j == (n - 1)) { // neu duyet tim den hang cuoi ma cac phan tu van bang khong
+						cout << "Ma tran suy bien!" << endl;
+						return 0;
 					}
 				}
-
 			}
-	}
+
+			double mul = 1 / arrGhep[i][i]; // bien doi arrGhep[i][i] = 1
+			for (int k = 0; k < 2 * n; k++) arrGhep[i][k] *= mul;
+
+			if (arrGhep[i][i] == 1) {
+				for (int k = i + 1; k < n; k++) { // bien doi cac so con lai nam duoi hang i tren cot i thanh 0
+					if (arrGhep[k][i] != 0) {
+						double temp = arrGhep[k][i];
+						for (int t = 0; t < 2 * n; t++) {
+							arrGhep[k][t] -= temp * arrGhep[i][t];
+						}
+					}
+				}
+			}
+
+
+			for (int j = i - 1; j >= 0; j--) { //cuoi cung la bien doi phan tam giac phia tren thanh 0
+				if (arrGhep[j][i] == 0) continue;
+				else {
+					double temp = arrGhep[j][i];
+					for (int t = 0; t < 2 * n; t++) {
+						arrGhep[j][t] -= temp * arrGhep[i][t];
+					}		
+				}
+			}
+		}
+
 		cout << "\nMa tran sau khi qua bien doi Gauss-Jordan:\n";
-		for(int i = 0; i < n ; i++){ 
-				for(int j=0;j<2*n;j++){
-					printf("%6.2f",arrGhep[i][j]);
-				}
-				cout << "\n";	
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < 2 * n; j++) {
+				printf("%6.2f", arrGhep[i][j]);
 			}
-		
+			cout << "\n";
+		}
 		system("pause");
 		cout << "\nMa tran nghich dao:\n";
-		for(int i = 0 ; i < n ; i++){ 
-				for(int j = n ; j < 2*n;j++){
-					printf("%6.2f",arrGhep[i][j]);
+		for (int i = 0; i < n; i++) {
+			for (int j = n; j < 2 * n; j++) {
+				printf("%6.2f", arrGhep[i][j]);
+			}
+			cout << "\n";
+		}
+
+		double check[n][n] = { 0 };
+		cout << " Kiem tra:\n";
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				for (int k = 0; k < n; k++) {
+					check[i][j]+= arr[i][k] * arrGhep[k][j + n];
 				}
-				cout << "\n";	
-			}	
+				cout << roundf(check[i][j] * 100) / 100 << " " ;
+			}
+			cout << endl;
+		}
 	}
+	
 	
 		
 	fclose(f);
