@@ -60,7 +60,7 @@ int main()
 			
 		// Gauss-Jordan
 		for (int i = 0; i < n; i++) {
-			if (arrGhep[i][i] == 0) { // kiem tra = 0
+			if (arrGhep[i][i] == 0) { // kiem tra = 0 va bien doi lai de phu hop
 				if (i == (n - 1)) {
 					cout << "Ma tran suy bien!" << endl;
 					return 0;
@@ -106,11 +106,12 @@ int main()
 				}
 			}
 		}
-
+		
+		//in ket qua
 		cout << "\nMa tran sau khi qua bien doi Gauss-Jordan:\n";
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < 2 * n; j++) {
-				printf("%6.2f", arrGhep[i][j]);
+				printf("%6.2f ", arrGhep[i][j]);
 			}
 			cout << "\n";
 		}
@@ -118,13 +119,13 @@ int main()
 		cout << "\nMa tran nghich dao:\n";
 		for (int i = 0; i < n; i++) {
 			for (int j = n; j < 2 * n; j++) {
-				printf("%6.2f", arrGhep[i][j]);
+				printf("%6.2f ", arrGhep[i][j]);
 			}
 			cout << "\n";
 		}
 
 		double check[n][n] = { 0 };
-		cout << " Kiem tra:\n";
+		cout << " Kiem tra:\n"; // lay A*A-1 xem co bang E khong
 
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
