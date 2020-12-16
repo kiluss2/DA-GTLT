@@ -85,18 +85,18 @@ int main()
 			for (int k = 0; k < 2 * n; k++) arrGhep[i][k] *= mul;
 
 			if (arrGhep[i][i] == 1) {
-				for (int k = i + 1; k < n; k++) { // bien doi cac so con lai nam duoi hang i tren cot i thanh 0
-					if (arrGhep[k][i] != 0) {
-						double temp = arrGhep[k][i];
+				for (int h = i + 1; h < n; h++) { // bien doi cac so con lai nam duoi phan tu o hang i cot i thanh 0
+					if (arrGhep[h][i] != 0) {
+						double temp = arrGhep[h][i];
 						for (int t = 0; t < 2 * n; t++) {
-							arrGhep[k][t] -= temp * arrGhep[i][t];
+							arrGhep[h][t] -= temp * arrGhep[i][t];
 						}
 					}
 				}
 			}
 
 
-			for (int j = i - 1; j >= 0; j--) { //cuoi cung la bien doi phan tam giac phia tren thanh 0
+			for (int j = i - 1; j >= 0; j--) { //cuoi cung la bien doi phan tren duong cheo thanh 0
 				if (arrGhep[j][i] == 0) continue;
 				else {
 					double temp = arrGhep[j][i];
@@ -108,10 +108,27 @@ int main()
 		}
 		
 		//in ket qua
+//		cout << "\nMa tran sau khi qua bien doi Gauss-Jordan:\n";
+//		for (int i = 0; i < n; i++) {
+//			for (int j = 0; j < 2 * n; j++) {
+//				printf("%6.2f ", arrGhep[i][j]);
+//			}
+//			cout << "\n";
+//		}
+//		system("pause");
+//		cout << "\nMa tran nghich dao:\n";
+//		for (int i = 0; i < n; i++) {
+//			for (int j = n; j < 2 * n; j++) {
+//				printf("%6.2f ", arrGhep[i][j]);
+//			}
+//			cout << "\n";
+//		}
+
 		cout << "\nMa tran sau khi qua bien doi Gauss-Jordan:\n";
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < 2 * n; j++) {
-				printf("%6.2f ", arrGhep[i][j]);
+				if(fabs(arrGhep[i][j] - (int)arrGhep[i][j]) < 0.01) printf(" %d    ", (int)arrGhep[i][j]);
+				else printf("%6.2f ", arrGhep[i][j]);
 			}
 			cout << "\n";
 		}
@@ -119,11 +136,12 @@ int main()
 		cout << "\nMa tran nghich dao:\n";
 		for (int i = 0; i < n; i++) {
 			for (int j = n; j < 2 * n; j++) {
-				printf("%6.2f ", arrGhep[i][j]);
+				if(fabs(arrGhep[i][j] - (int)arrGhep[i][j]) < 0.01) printf(" %d    ", (int)arrGhep[i][j]);
+				else printf("%6.2f ", arrGhep[i][j]);
 			}
 			cout << "\n";
 		}
-
+		
 		double check[n][n] = { 0 };
 		cout << " Kiem tra:\n"; // lay A*A-1 xem co bang E khong
 
